@@ -11,13 +11,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 public class Starter {
     ChromeDriver driver;
-    private final Byte THREAD_NUM = 3;
-    ExecutorService executors = Executors.newFixedThreadPool(THREAD_NUM);
     Printer printer = new EventPrinter();
     Scraper scraper = new Scraper();
     CompletableFuture<List<Event>> allEventsFuture;
@@ -55,6 +51,6 @@ public class Starter {
             allEventsFuture.thenAccept(s -> printer.print(s));
         });
         Driver.close(driver);
-        executors.shutdown();
+        Scraper.executorClose();
     }
 }

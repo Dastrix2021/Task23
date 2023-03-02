@@ -16,8 +16,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Scraper {
     DriverUtil navigate = new DriverUtil();
+    private static final Byte THREAD_NUM = 3;
+    static ExecutorService executors = Executors.newFixedThreadPool(THREAD_NUM);
     public void getAuth(ChromeDriver driver) {
         navigate.getPage(driver, AuthorizationConstants.LOGIN_URL);
         navigate.safeClick(driver, ByConstants.BUTTON_EMAIL);
@@ -83,6 +88,9 @@ public class Scraper {
                 driver.quit();
             }
             return event;
-        });
+        }, executors);
+    }
+    public static void executorClose() {
+        executors.shutdown();
     }
 }
