@@ -2,9 +2,7 @@ package com.dastrix.print;
 
 import com.dastrix.data.apis.ApiEvent;
 import com.dastrix.data.selenium.Event;
-
 import java.util.List;
-
 public class EventPrinter implements Printer {
     @Override
     public void print(List<Event> events) {
