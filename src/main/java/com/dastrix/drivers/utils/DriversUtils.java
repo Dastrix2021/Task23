@@ -1,7 +1,7 @@
-package com.dastrix.utils;
+package com.dastrix.drivers.utils;
 
-import org.openqa.selenium.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 public interface DriversUtils {
     void getPage(ChromeDriver ch, String path);

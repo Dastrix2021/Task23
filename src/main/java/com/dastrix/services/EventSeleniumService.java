@@ -1,33 +1,33 @@
-package com.dastrix;
+package com.dastrix.services;
 
 import com.dastrix.constants.ByConstants;
 import com.dastrix.constants.PathsConstants;
-import com.dastrix.constants.AuthorizationConstants;
-import com.dastrix.data.Coefficient;
-import com.dastrix.data.Event;
-import com.dastrix.data.Market;
+import com.dastrix.constants.RegistrationConstants;
 import com.dastrix.data.date.Date;
+import com.dastrix.data.selenium.Coefficient;
+import com.dastrix.data.selenium.Event;
+import com.dastrix.data.selenium.Market;
 import com.dastrix.drivers.Driver;
-import com.dastrix.utils.DriverUtil;
-import org.openqa.selenium.*;
+import com.dastrix.drivers.utils.DriverUtil;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class Scraper {
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+public class EventSeleniumService {
     DriverUtil navigate = new DriverUtil();
-    private static final Byte THREAD_NUM = 3;
-    static ExecutorService executors = Executors.newFixedThreadPool(THREAD_NUM);
     public void getAuth(ChromeDriver driver) {
-        navigate.getPage(driver, AuthorizationConstants.LOGIN_URL);
+        navigate.getPage(driver, RegistrationConstants.LOGIN_URL);
         navigate.safeClick(driver, ByConstants.BUTTON_EMAIL);
-        navigate.putKey(driver, ByConstants.INPUT_LOGIN, AuthorizationConstants.EMAIL);
-        navigate.putKey(driver, ByConstants.INPUT_PASSWORD, AuthorizationConstants.PASSWORD);
+        navigate.putKey(driver, ByConstants.INPUT_LOGIN, RegistrationConstants.EMAIL);
+        navigate.putKey(driver, ByConstants.INPUT_PASSWORD, RegistrationConstants.PASSWORD);
         navigate.buttonRegClick(driver, ByConstants.BUTTON_SUBMIT);
         navigate.safeClickWithSleep(driver, ByConstants.LINES, PathsConstants.AFTER_LINE_URL);
     }
@@ -88,9 +88,6 @@ public class Scraper {
                 driver.quit();
             }
             return event;
-        }, executors);
-    }
-    public static void executorClose() {
-        executors.shutdown();
+        });
     }
 }

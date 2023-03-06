@@ -1,9 +1,10 @@
-package com.dastrix.data;
+package com.dastrix.data.selenium;
 
 import com.dastrix.data.date.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.List;
 @Data
 @AllArgsConstructor

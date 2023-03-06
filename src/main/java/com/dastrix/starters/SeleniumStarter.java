@@ -1,21 +1,27 @@
-package com.dastrix;
+package com.dastrix.starters;
 
+import com.dastrix.constants.ApiConstants;
 import com.dastrix.constants.PathsConstants;
-import com.dastrix.data.Event;
+import com.dastrix.data.selenium.Event;
 import com.dastrix.drivers.Driver;
-import com.dastrix.print.Printer;
 import com.dastrix.print.EventPrinter;
+import com.dastrix.print.Printer;
+import com.dastrix.services.EventSeleniumService;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-public class Starter {
+public class SeleniumStarter implements Starter {
     ChromeDriver driver;
+    ExecutorService executor = Executors.newFixedThreadPool(ApiConstants.THREAD_NUM);
     Printer printer = new EventPrinter();
-    Scraper scraper = new Scraper();
+    EventSeleniumService scraper = new EventSeleniumService();
     CompletableFuture<List<Event>> allEventsFuture;
     List<String> sportList() {
         List<String> events = new ArrayList<>();
@@ -25,7 +31,8 @@ public class Starter {
         events.add(PathsConstants.HOCKEY);
         return events;
     }
-    public void scrap() {
+    @Override
+    public void scrape() {
         driver = Driver.createDriver();
         scraper.getAuth(driver);
         sportList().forEach(event -> {
@@ -51,6 +58,6 @@ public class Starter {
             allEventsFuture.thenAccept(s -> printer.print(s));
         });
         Driver.close(driver);
-        Scraper.executorClose();
+        executor.shutdown();
     }
 }

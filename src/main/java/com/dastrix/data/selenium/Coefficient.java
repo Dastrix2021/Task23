@@ -1,7 +1,8 @@
-package com.dastrix.data;
+package com.dastrix.data.selenium;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import java.util.List;
 @Data
 @AllArgsConstructor

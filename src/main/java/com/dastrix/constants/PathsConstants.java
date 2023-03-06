@@ -1,6 +1,5 @@
 package com.dastrix.constants;
 public class PathsConstants {
-    public final static String LOGIN_URL = "https://leon.bet/ru-ua/login";
     public final static String AFTER_LINE_URL = "https://leon.bet/ru-ua/bets";
     public final static String VISIBILITY_BALANCE = "balance__text";
     public final static String TENNIS = "https://leon.bet/ru-ua/bets/tennis";
