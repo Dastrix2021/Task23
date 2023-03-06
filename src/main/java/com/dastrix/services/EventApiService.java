@@ -40,23 +40,19 @@ public class EventApiService {
                 .map(r -> r.thenApply(eventConfigure::get))
                 .map(CompletableFuture::join).toList();
     }
-    public Stream<League> getLeagues(Sport sport) {
+    public Stream<Optional<ApiEvent>> getLeagues(Sport sport) {
         return sport.getRegions().stream()
                 .flatMap(region -> region.getLeagues().stream().filter(League::getTop))
                 .map(league -> client.build(String.format(ApiConstants.LEAGUE, league.getId().toString())))
                 .map(r -> client.httpClient.sendAsync(r, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body))
                 .map(response -> response.thenApply(leagueConfigure::get))
-                .map(CompletableFuture::join);
+                .map(CompletableFuture::join)
+                .map(l -> l.getEvents().stream().findFirst());
     }
-    public Optional<ApiEvent> getFirstEvent(League league) {
-        return league.getEvents().stream().findFirst();
-    }
-
     public List<Optional<ApiEvent>> events() {
         return getSports().stream()
                 .flatMap(this::getLeagues)
-                .map(this::getFirstEvent)
                 .toList();
     }
     public List<Long> getEventsId(List<Optional<ApiEvent>> events) {
