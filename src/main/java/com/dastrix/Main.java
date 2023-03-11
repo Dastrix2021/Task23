@@ -2,9 +2,8 @@ package com.dastrix;
 import com.dastrix.starters.ApiStarter;
 import com.dastrix.starters.SeleniumStarter;
 import com.dastrix.starters.Starter;
-import org.openqa.selenium.WebDriverException;
 public class Main {
-    public static void main(String[] args) throws WebDriverException {
+    public static void main(String[] args) {
         Starter starter = new ApiStarter();
         starter.scrape();
     }

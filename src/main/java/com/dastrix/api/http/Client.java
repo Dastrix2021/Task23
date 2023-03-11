@@ -1,6 +1,4 @@
-package com.dastrix.api.requests;
-
-import com.dastrix.constants.ApiConstants;
+package com.dastrix.api.http;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -9,16 +7,18 @@ import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 public class Client {
-    public static final ExecutorService executor = Executors.newFixedThreadPool(ApiConstants.THREAD_NUM);
+    public final static Byte THREAD_NUM = 3;
+    public final static Byte WAIT_CONNECTION_TIME = 30;
+    public static final ExecutorService executor = Executors.newFixedThreadPool(THREAD_NUM);
     public final HttpClient httpClient = HttpClient
             .newBuilder()
             .executor(executor)
-            .connectTimeout(Duration.ofSeconds(ApiConstants.WAIT_CONNECTION_TIME))
+            .connectTimeout(Duration.ofSeconds(WAIT_CONNECTION_TIME))
             .build();
     public HttpRequest build(String u) {
         return HttpRequest.newBuilder()
                 .uri(URI.create(u))
-                .header(ApiConstants.X_APP_LANGUAGE, ApiConstants.RU_UA)
+                .header("x-app-language", "ru_UA")
                 .GET()
                 .build();
     }

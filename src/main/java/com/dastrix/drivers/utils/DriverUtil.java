@@ -1,7 +1,6 @@
 package com.dastrix.drivers.utils;
 
 import com.dastrix.constants.ByConstants;
-import com.dastrix.constants.PathsConstants;
 import com.dastrix.drivers.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,14 +11,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-public class DriverUtil implements DriversUtils {
-    @Override
+public class DriverUtil {
     public void getPage(ChromeDriver ch, String path) {
         WebDriverWait w = Driver.createWaitDriver(ch);
         ch.get(path);
         w.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
-    @Override
     public void putKey(ChromeDriver ch, By by, String key) {
         WebDriverWait w = Driver.createWaitDriver(ch);
         try {
@@ -30,7 +27,6 @@ public class DriverUtil implements DriversUtils {
             ch.quit();
         }
     }
-    @Override
     public void safeClick(ChromeDriver ch, By by) {
         WebDriverWait w = Driver.createWaitDriver(ch);
         try {
@@ -45,7 +41,6 @@ public class DriverUtil implements DriversUtils {
             ch.quit();
         }
     }
-    @Override
     public void safeLinks(ChromeDriver ch, By by) {
         WebDriverWait w = Driver.createWaitDriver(ch);
         try {
@@ -61,7 +56,6 @@ public class DriverUtil implements DriversUtils {
             ch.quit();
         }
     }
-    @Override
     public void safeSportClick(ChromeDriver ch, String sport) {
         WebDriverWait w = Driver.createWaitDriver(ch);
         try {
@@ -76,20 +70,19 @@ public class DriverUtil implements DriversUtils {
             ch.quit();
         }
     }
-    @Override
     public void buttonRegClick(ChromeDriver ch, By by) {
         WebDriverWait w = Driver.createWaitDriver(ch);
         try {
             w.until(ExpectedConditions.elementToBeClickable(by));
             ch.findElement(by).click();
             w.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ByConstants.CHECK_BODY));
-            w.until(ExpectedConditions.visibilityOfElementLocated(By.className(PathsConstants.VISIBILITY_BALANCE)));
+            w.until(ExpectedConditions.visibilityOfElementLocated(ByConstants.VISIBILITY_BALANCE));
         } catch (WebDriverException e) {
             e.printStackTrace();
             ch.quit();
         }
     }
-    @Override
+
     public void safeClickWithSleep(ChromeDriver ch, By by, String expectedUrl) {
         WebDriverWait w = Driver.createWaitDriver(ch);
         try {
@@ -103,7 +96,6 @@ public class DriverUtil implements DriversUtils {
             ch.quit();
         }
     }
-    @Override
     public Long getMatchId(WebDriver driver) {
         WebDriverWait waitDriver = new WebDriverWait(driver, Duration.ofSeconds(10));
         waitDriver.until(webDriver -> ((JavascriptExecutor)webDriver).executeScript("return document.readyState").equals("complete"));

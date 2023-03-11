@@ -1,12 +1,12 @@
 package com.dastrix.starters;
 
-import com.dastrix.api.requests.Client;
+import com.dastrix.api.http.Client;
 import com.dastrix.print.EventPrinter;
 import com.dastrix.print.Printer;
 import com.dastrix.services.EventApiService;
 import lombok.RequiredArgsConstructor;
 
-import static com.dastrix.api.requests.Client.executor;
+import static com.dastrix.api.http.Client.executor;
 @RequiredArgsConstructor
 public class ApiStarter implements Starter {
     Client client = new Client();

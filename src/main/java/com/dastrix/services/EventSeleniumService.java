@@ -1,9 +1,8 @@
 package com.dastrix.services;
 
 import com.dastrix.constants.ByConstants;
-import com.dastrix.constants.PathsConstants;
-import com.dastrix.constants.RegistrationConstants;
-import com.dastrix.data.date.Date;
+import com.dastrix.constants.UrlConstants;
+import com.dastrix.data.selenium.Date;
 import com.dastrix.data.selenium.Coefficient;
 import com.dastrix.data.selenium.Event;
 import com.dastrix.data.selenium.Market;
@@ -15,21 +14,22 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 public class EventSeleniumService {
+    public static final String EMAIL = "some@gmail.com";
+    public static final String PASSWORD = "p4s$wOrD";
     DriverUtil navigate = new DriverUtil();
     public void getAuth(ChromeDriver driver) {
-        navigate.getPage(driver, RegistrationConstants.LOGIN_URL);
+        navigate.getPage(driver, UrlConstants.LOGIN_URL);
         navigate.safeClick(driver, ByConstants.BUTTON_EMAIL);
-        navigate.putKey(driver, ByConstants.INPUT_LOGIN, RegistrationConstants.EMAIL);
-        navigate.putKey(driver, ByConstants.INPUT_PASSWORD, RegistrationConstants.PASSWORD);
+        navigate.putKey(driver, ByConstants.INPUT_LOGIN, EMAIL);
+        navigate.putKey(driver, ByConstants.INPUT_PASSWORD, PASSWORD);
         navigate.buttonRegClick(driver, ByConstants.BUTTON_SUBMIT);
-        navigate.safeClickWithSleep(driver, ByConstants.LINES, PathsConstants.AFTER_LINE_URL);
+        navigate.safeClickWithSleep(driver, ByConstants.LINES, UrlConstants.AFTER_LINE_URL);
     }
     public void getSport(ChromeDriver driver, String sport) {
             navigate.safeSportClick(driver, sport);
@@ -46,7 +46,7 @@ public class EventSeleniumService {
                     .forEach(e -> linksList.add(e.getAttribute("href")));
         } catch (NoSuchElementException e) {
             System.out.println("Відсутня топ ліга: " + driver.getCurrentUrl());
-            driver.navigate().to(PathsConstants.AFTER_LINE_URL);
+            driver.navigate().to(UrlConstants.AFTER_LINE_URL);
             w.until(ExpectedConditions.visibilityOfElementLocated(ByConstants.CHECK_SLIP_VIEW));
             return linksList;
         }
@@ -81,8 +81,8 @@ public class EventSeleniumService {
                     cfList.add(new Coefficient(title, marketList));
                 });
                 event = new Event(id, header, cfList, new Date(date, time));
-                driver.navigate().to(PathsConstants.AFTER_LINE_URL);
-                w.until(ExpectedConditions.urlToBe(PathsConstants.AFTER_LINE_URL));
+                driver.navigate().to(UrlConstants.AFTER_LINE_URL);
+                w.until(ExpectedConditions.urlToBe(UrlConstants.AFTER_LINE_URL));
             } catch (WebDriverException | IndexOutOfBoundsException e) {
                 e.printStackTrace();
                 driver.quit();

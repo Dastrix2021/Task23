@@ -21,4 +21,5 @@ public class ByConstants {
     public static final By HEADLINE = By.xpath("//span[@class='headline-info__day']");
     public static final By HEADLINE_INFO_TIME = By.className("headline-info__time");
     public static final By CHECK_GROUP_SOWN = By.className("group--shown");
+    public final static By VISIBILITY_BALANCE = By.className("balance__text");
 }

@@ -1,4 +1,4 @@
-package com.dastrix.data.date;
+package com.dastrix.data.selenium;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 @Data
 @AllArgsConstructor
-public class Date implements DateTime {
+public class Date {
     private String date;
     private String time;
-    @Override
     public String getDateTime() {
         try {
             String dateTime = date + " " + time;
@@ -25,7 +24,6 @@ public class Date implements DateTime {
         }
         return null;
     }
-    @Override
     public SimpleDateFormat getFormat(String s) throws ParseException {
         Locale locale = new Locale("ru", "RU");
         if (s.matches("[^а-яА-Я]+"))
